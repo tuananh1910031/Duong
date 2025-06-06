@@ -130,13 +130,38 @@
           height: 100px;
         }
       }
+      #play-heart {
+        position: fixed;
+        bottom: 50px;
+        left: 50%;
+        transform: translateX(-50%);
+        font-size: 5rem;
+        cursor: pointer;
+        animation: pulse 1.5s infinite;
+        z-index: 9999;
+        user-select: none;
+        text-shadow: 0 0 10px red;
+      }
+
+      @keyframes pulse {
+        0% {
+          transform: translateX(-50%) scale(1);
+        }
+        50% {
+          transform: translateX(-50%) scale(1.2);
+        }
+        100% {
+          transform: translateX(-50%) scale(1);
+        }
+      }
     </style>
   </head>
   <body>
     <div id="wrapper">
       <div id="scene"></div>
     </div>
-    <audio id="bg-music" src="music.mp3" preload="auto" loop></audio>
+    <audio id="bg-music" src="music.mp3" preload="auto"></audio>
+    <div id="play-heart" title="Nhấn để phát nhạc">❤️</div>
 
     <script>
       const scene = document.getElementById("scene");
@@ -302,27 +327,12 @@
       window.addEventListener("touchend", () => {
         isDragging = false;
       });
-      const audio = document.getElementById("bg-music");
+      const bgMusic = document.getElementById("bg-music");
+      const playHeart = document.getElementById("play-heart");
 
-      // Sau 3 giây, cho phép người dùng click lần đầu để phát nhạc
-      setTimeout(() => {
-        const autoPlayHandler = () => {
-          audio
-            .play()
-            .then(() => {
-              console.log("Nhạc đã phát thành công.");
-            })
-            .catch((e) => {
-              console.warn("Không thể phát nhạc tự động: ", e);
-            });
-          document.removeEventListener("click", autoPlayHandler);
-          document.removeEventListener("touchstart", autoPlayHandler);
-        };
-
-        // Đợi lần click hoặc chạm đầu tiên
-        document.addEventListener("click", autoPlayHandler);
-        document.addEventListener("touchstart", autoPlayHandler);
-      }, 100);
+      playHeart.addEventListener("click", () => {
+        bgMusic.play();
+      });
     </script>
   </body>
 </html>

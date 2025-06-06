@@ -135,6 +135,7 @@
   <body>
     <div id="wrapper">
       <div id="scene"></div>
+      <audio id="bg-music" src="music.mp3"></audio>
     </div>
 
     <script>
@@ -301,6 +302,12 @@
       window.addEventListener("touchend", () => {
         isDragging = false;
       });
+      setTimeout(() => {
+        const audio = document.getElementById("bg-music");
+        audio.play().catch((e) => {
+          console.warn("Không thể phát nhạc tự động: ", e);
+        });
+      }, 500);
     </script>
   </body>
 </html>

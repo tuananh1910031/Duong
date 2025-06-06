@@ -138,7 +138,6 @@
     </div>
     <audio id="bg-music" src="music.mp3" preload="auto" loop></audio>
 
-
     <script>
       const scene = document.getElementById("scene");
 
@@ -305,25 +304,25 @@
       });
       const audio = document.getElementById("bg-music");
 
-      const audio = document.getElementById("bg-music");
+      // Sau 3 giây, cho phép người dùng click lần đầu để phát nhạc
+      setTimeout(() => {
+        const autoPlayHandler = () => {
+          audio
+            .play()
+            .then(() => {
+              console.log("Nhạc đã phát thành công.");
+            })
+            .catch((e) => {
+              console.warn("Không thể phát nhạc tự động: ", e);
+            });
+          document.removeEventListener("click", autoPlayHandler);
+          document.removeEventListener("touchstart", autoPlayHandler);
+        };
 
-
-setTimeout(() => {
-  const autoPlayHandler = () => {
-    audio.play().then(() => {
-      console.log("Nhạc đã phát thành công.");
-    }).catch((e) => {
-      console.warn("Không thể phát nhạc tự động: ", e);
-    });
-    document.removeEventListener("click", autoPlayHandler);
-    document.removeEventListener("touchstart", autoPlayHandler);
-  };
-
-  // Đợi lần click hoặc chạm đầu tiên
-  document.addEventListener("click", autoPlayHandler);
-  document.addEventListener("touchstart", autoPlayHandler);
-}, 3000);
-
+        // Đợi lần click hoặc chạm đầu tiên
+        document.addEventListener("click", autoPlayHandler);
+        document.addEventListener("touchstart", autoPlayHandler);
+      }, 3000);
     </script>
   </body>
 </html>
